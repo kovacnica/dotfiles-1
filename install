@@ -26,12 +26,6 @@ for bin in $BASE/bin/*; do
   ln -svf "$bin" ~/bin
 done
 
-# leiningen
-mkdir -p ~/.lein
-ln -sfv "$BASE/profiles.clj" ~/.lein/
-rm -f ~/.lein/src
-ln -sfv "$BASE/lein-user" ~/.lein/src
-
 if [ "$(uname -s)" = 'Darwin' ]; then
   # Homebrew
   [ -z "$(which brew)" ] &&
@@ -40,8 +34,9 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   echo "Updating homebrew"
   brew install \
     ag ripgrep ant cmus coreutils cscope exiftool doxygen liboauth \
-    fish git graphviz imagemagick leiningen sbt \
-    maven ranger tree vim wget zsh jq macvim ruby python go highlight reattach-to-user-namespace
+    fish git graphviz imagemagick boot-clj sbt \
+    maven ranger tree vim wget zsh jq macvim ruby python \
+    go highlight reattach-to-user-namespace node npm neovim 
   brew install gnuplot --with-qt@5.7
 
   # Patched version of tmux
@@ -52,9 +47,11 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     (bash <(curl -fL https://raw.githubusercontent.com/junegunn/blsd/master/install) && mv blsd ~/bin)
 
   # Create
+  echo "Creating gems..."
   gem install gem-ctags
   gem ctags
 
+  echo "Installing universal ctags..."
   brew tap universal-ctags/universal-ctags
   brew install --HEAD universal-ctags
 
@@ -65,8 +62,8 @@ else
   grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
 fi
 
-git config --global user.email "junegunn.c@gmail.com"
-git config --global user.name "Junegunn Choi"
+git config --global user.email "robi@neyho.com"
+git config --global user.name "Robert Gersak"
 
 tmux source-file ~/.tmux.conf
 

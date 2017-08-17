@@ -16,13 +16,14 @@ let s:darwin = has('mac')
 
 silent! if plug#begin('~/.vim/plugged')
 
-if s:darwin
-  let g:plug_url_format = 'git@github.com:%s.git'
-else
-  let $GIT_SSL_NO_VERIFY = 'true'
-endif
+" if s:darwin
+"   let g:plug_url_format = 'git@github.com:%s.git'
+" else
+"   let $GIT_SSL_NO_VERIFY = 'true'
+" endif
 
 " My plugins
+Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
 Plug 'junegunn/vim-emoji'
@@ -33,7 +34,6 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-journal'
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/gv.vim'
-Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
 Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
@@ -97,19 +97,21 @@ Plug 'justinmk/vim-gtfo'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
 
 " Lang
 if v:version >= 703
+  Plug 'guns/vim-sexp'
   Plug 'kovisoft/paredit', { 'for': 'clojure' }
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+  Plug 'tpope/vim-salve', { 'for': 'clojure' }
   Plug 'guns/vim-clojure-static'
   Plug 'guns/vim-clojure-highlight'
-  Plug 'guns/vim-slamhound'
-  Plug 'venantius/vim-cljfmt'
 endif
+Plug 'ap/vim-css-color'
 Plug 'tpope/vim-bundler'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
@@ -348,7 +350,7 @@ if exists('&fixeol')
 endif
 
 if has('gui_running')
-  set guifont=Menlo:h14 columns=80 lines=40
+  " set guifont=Menlo:h14 columns=80 lines=40
   silent! colo seoul256-light
 else
   silent! colo seoul256
@@ -1476,7 +1478,7 @@ nmap gaa ga_
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
 " ----------------------------------------------------------------------------
-let g:github_dashboard = { 'username': 'junegunn' }
+let g:github_dashboard = { 'username': 'rgersak' }
 
 " ----------------------------------------------------------------------------
 " indentLine
@@ -1501,41 +1503,6 @@ endif
 " vim-emoji :dog: :cat: :rabbit:!
 " ----------------------------------------------------------------------------
 command! -range EmojiReplace <line1>,<line2>s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
-
-" ----------------------------------------------------------------------------
-" goyo.vim + limelight.vim
-" ----------------------------------------------------------------------------
-let g:limelight_paragraph_span = 1
-let g:limelight_priority = -1
-
-function! s:goyo_enter()
-  if has('gui_running')
-    set fullscreen
-    set background=light
-    set linespace=7
-  elseif exists('$TMUX')
-    silent !tmux set status off
-  endif
-  Limelight
-  let &l:statusline = '%M'
-  hi StatusLine ctermfg=red guifg=red cterm=NONE gui=NONE
-endfunction
-
-function! s:goyo_leave()
-  if has('gui_running')
-    set nofullscreen
-    set background=dark
-    set linespace=0
-  elseif exists('$TMUX')
-    silent !tmux set status on
-  endif
-  Limelight!
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-nnoremap <Leader>G :Goyo<CR>
 
 " ----------------------------------------------------------------------------
 " ALE
@@ -1615,11 +1582,6 @@ let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
-
-" vim-cljfmt
-let g:clj_fmt_autosave = 0
-autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
-autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 
 " ----------------------------------------------------------------------------
 " vim-markdown
@@ -1747,7 +1709,7 @@ command! PlugHelp call fzf#run(fzf#wrap({
 " ============================================================================
 
 augroup vimrc
-  au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
+  au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | s
 
   " IndentLines
   au FileType slim IndentLinesEnable
@@ -1809,3 +1771,67 @@ endif
 
 " }}}
 " ============================================================================
+
+" Gersak
+
+nmap <C-t> :tabnew<cr>
+nmap L :tabnext<cr>
+nmap H :tabNext<cr>
+
+colorscheme gruvbox
+set tabstop=2
+set shiftwidth=2
+set diffopt+=iwhite
+
+"
+au BufNewFile,BufRead *.edn set filetype=clojure
+au BufNewFile,BufRead *.boot set filetype=clojure
+let g:clojure_align_multiline_strings = 1
+let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes'
+let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom']
+
+" Clojure test
+autocmd FileType clojure setlocal lispwords+=describe,it
+" Core.match
+autocmd FileType clojure setlocal lispwords+=match
+" Compojure-api
+autocmd FileType clojure setlocal lispwords+=context,swaggered,middleware,context*
+" Midje
+autocmd FileType clojure setlocal lispwords+=fact,facts,provided,fact-group
+" Core.logic
+autocmd FileType clojure setlocal lispwords+=run*
+" Cljs
+autocmd FileType clojure setlocal lispwords+=this-as
+" Plumbing
+autocmd FileType clojure setlocal lispwords+=for-map,fnk,letk
+" Core.async
+autocmd FileType clojure setlocal lispwords+=go-loop
+" Chesire
+autocmd FileType clojure setlocal lispwords+=add-encoder
+" Boot
+autocmd FileType clojure setlocal lispwords+=with-call-in,with-eval-in,with-pre-wrap,with-post-wrap
+" Cats
+autocmd FileType clojure setlocal lispwords+=with-context,alet,mlet
+
+"
+" SHORTCUTS
+" Clojure
+nmap <silent> <leader>r :Require<cr>
+nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
+
+
+" EASYMOTION
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+"nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+map <leader>s <Plug>(easymotion-overwin-f2)
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)

@@ -68,7 +68,7 @@ alias cd.='cd ..'
 alias cd..='cd ..'
 alias l='ls -alF'
 alias ll='ls -l'
-alias vi='vim'
+alias vi='nvim'
 alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
@@ -549,3 +549,5 @@ if [[ $- =~ i ]]; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export TERM=screen-256color
