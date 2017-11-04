@@ -1,5 +1,5 @@
 ;; https://github.com/technomancy/leiningen/blob/master/doc/PROFILES.md
-{:user {:plugins [[cider/cider-nrepl "0.14.0"]
+{:user {:plugins [#_[cider/cider-nrepl "0.15.1"]
                   [lein-auto "0.1.3"] [lein-kibit "0.1.3"]     ; lein auto kibit
                   [lein-marginalia "0.9.0"]                    ; lein marg
                   [codox "0.8.13"]                             ; lein doc
@@ -10,6 +10,7 @@
                   [lein-exec "0.3.5"]
                   [lein-licenses "0.2.1"]
                   [lein-try "0.4.3"]
+                  [lein-figwheel "0.5.14"]
                   [jonase/eastwood "0.2.1"]
                   [lein-cljfmt "0.5.6"]]
         :dependencies [[slamhound "1.5.5"]

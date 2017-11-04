@@ -1,6 +1,6 @@
-" vim: set foldmethod=marker foldlevel=0 nomodeline:
-" ============================================================================
 " .vimrc of Junegunn Choi {{{
+" ============================================================================
+" vim: set foldmethod=marker foldlevel=0 nomodeline:
 " ============================================================================
 
 " Vim 8 defaults
@@ -36,7 +36,7 @@ Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
-Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
+" Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -60,35 +60,21 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'rhysd/vim-grammarous'
-Plug 'beloglazov/vim-online-thesaurus'
-Plug 'sgur/vim-editorconfig'
-
-function! BuildYCM(info)
-  if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --gocode-completer
-  endif
-endfunction
-Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'], 'do': function('BuildYCM') }
-
-" Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
-" Plug 'honza/vim-snippets'
-
-" Browsing
-Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
-autocmd! User indentLine doautocmd indentLine Syntax
-
+" Plug 'rhysd/vim-grammarous'
+" Plug 'beloglazov/vim-online-thesaurus'
+" Plug 'sgur/vim-editorconfig'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-augroup nerd_loader
-  autocmd!
-  autocmd VimEnter * silent! autocmd! FileExplorer
-  autocmd BufEnter,BufNew *
-        \  if isdirectory(expand('<amatch>'))
-        \|   call plug#load('nerdtree')
-        \|   execute 'autocmd! nerd_loader'
-        \| endif
-augroup END
-
+" augroup nerd_loader
+"   autocmd!
+"   autocmd VimEnter * silent! autocmd! FileExplorer
+"   autocmd BufEnter,BufNew *
+"         \  if isdirectory(expand('<amatch>'))
+"         \|   call plug#load('nerdtree')
+"         \|   execute 'autocmd! nerd_loader'
+"         \| endif
+" augroup END
+ 
 if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 endif
@@ -97,42 +83,42 @@ Plug 'justinmk/vim-gtfo'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
 if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
 
-" Lang
-if v:version >= 703
-  Plug 'guns/vim-sexp'
-  Plug 'kovisoft/paredit', { 'for': 'clojure' }
-  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'tpope/vim-salve', { 'for': 'clojure' }
-  Plug 'guns/vim-clojure-static'
-  Plug 'guns/vim-clojure-highlight'
-endif
+" Clojure
+Plug 'clojure-vim/async-clj-omni'
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'tpope/vim-salve', { 'for': 'clojure' }
+Plug 'guns/vim-clojure-static'
+Plug 'guns/vim-clojure-highlight'
+
+
 Plug 'ap/vim-css-color'
-Plug 'tpope/vim-bundler'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'groenewege/vim-less'
+" Plug 'tpope/vim-bundler'
+" Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+"Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'kchmck/vim-coffee-script'
-Plug 'slim-template/vim-slim'
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'rust-lang/rust.vim'
-Plug 'tpope/vim-rails',      { 'for': []      }
-Plug 'derekwyatt/vim-scala'
-Plug 'honza/dockerfile.vim'
+" Plug 'mxw/vim-jsx'
+" Plug 'kchmck/vim-coffee-script'
+" Plug 'slim-template/vim-slim'
+" Plug 'Glench/Vim-Jinja2-Syntax'
+" Plug 'rust-lang/rust.vim'
+" Plug 'tpope/vim-rails',      { 'for': []      }
+" Plug 'derekwyatt/vim-scala'
+" Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
-Plug 'dag/vim-fish'
+" Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
+" Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 
 " Lint
-Plug 'metakirby5/codi.vim'
-Plug 'w0rp/ale'
+" Plug 'metakirby5/codi.vim'
+" Plug 'w0rp/ale'
 
 call plug#end()
 endif
@@ -142,13 +128,13 @@ endif
 " BASIC SETTINGS {{{
 " ============================================================================
 
-let mapleader      = ' '
-let maplocalleader = ' '
+let mapleader      = '\'
+let maplocalleader = '\'
 
 augroup vimrc
   autocmd!
 augroup END
-
+" 
 set nu
 set autoindent
 set smartindent
@@ -183,7 +169,7 @@ set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview
 set nocursorline
 set nrformats=hex
-silent! set cryptmethod=blowfish2
+" silent! set cryptmethod=blowfish2
 
 set formatoptions+=1
 if has('patch-7.3.541')
@@ -365,8 +351,8 @@ endif
 " Basic mappings
 " ----------------------------------------------------------------------------
 
-noremap <C-F> <C-D>
-noremap <C-B> <C-U>
+" noremap <C-F> <C-D>
+" noremap <C-B> <C-U>
 
 " Save
 inoremap <C-s>     <C-O>:update<cr>
@@ -375,11 +361,11 @@ nnoremap <leader>s :update<cr>
 nnoremap <leader>w :update<cr>
 
 " Disable CTRL-A on tmux or on screen
-if $TERM =~ 'screen'
-  nnoremap <C-a> <nop>
-  nnoremap <Leader><C-a> <C-a>
-endif
-
+" if $TERM =~ 'screen'
+"   nnoremap <C-a> <nop>
+"   nnoremap <Leader><C-a> <C-a>
+" endif
+" 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
 nnoremap <C-Q>     :q<cr>
@@ -394,15 +380,12 @@ nnoremap g[ :pop<cr>
 " Jump list (to newer position)
 nnoremap <C-p> <C-i>
 
-" <F10> | NERD Tree
-nnoremap <F10> :NERDTreeToggle<cr>
+"  NERD Tree
+nnoremap <leader>n :NERDTreeToggle<cr>
 
-" <F11> | Tagbar
-if v:version >= 703
-  inoremap <F11> <esc>:TagbarToggle<cr>
-  nnoremap <F11> :TagbarToggle<cr>
-  let g:tagbar_sort = 0
-endif
+"  Tagbar
+nnoremap <silent>tt :TagbarToggle<cr>
+let g:tagbar_sort = 0
 
 " jk | Escaping!
 inoremap jk <Esc>
@@ -435,16 +418,6 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
 " Last inserted text
 nnoremap g. :normal! `[v`]<cr><left>
-
-" ----------------------------------------------------------------------------
-" nvim
-" ----------------------------------------------------------------------------
-if has('nvim')
-  tnoremap <a-a> <esc>a
-  tnoremap <a-b> <esc>b
-  tnoremap <a-d> <esc>d
-  tnoremap <a-f> <esc>f
-endif
 
 " ----------------------------------------------------------------------------
 " Quickfix
@@ -558,23 +531,28 @@ function! s:super_duper_tab(pumvisible, next)
   return s:feedkeys(k)
 endfunction
 
-if has_key(g:plugs, 'ultisnips')
-  " UltiSnips will be loaded only when tab is first pressed in insert mode
-  if !exists(':UltiSnipsEdit')
-    inoremap <silent> <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
-    imap <tab> <Plug>(tab)
-  endif
 
-  let g:SuperTabMappingForward  = "<tab>"
-  let g:SuperTabMappingBackward = "<s-tab>"
-  function! SuperTab(m)
-    return s:super_duper_tab(a:m == 'n' ? "\<c-n>" : "\<c-p>",
-                           \ a:m == 'n' ? "\<tab>" : "\<s-tab>")
-  endfunction
-else
-  inoremap <silent> <tab>   <c-r>=<SID>super_duper_tab(pumvisible(), 1)<cr>
-  inoremap <silent> <s-tab> <c-r>=<SID>super_duper_tab(pumvisible(), 0)<cr>
-endif
+" SuperTab like snippets' behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <expr><TAB>  
+"       \ pumvisible() ? "\<C-n>" : 
+"       \ neosnippet#expandable_or_jumpable() ?
+"       \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"       \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" " For conceal markers.
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
+
+" Enable snipMate compatibility feature.
+" let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Expand the completed snippet trigger by <CR>.
+" imap <expr><CR> 
+"       \(pumvisible() && neosnippet#expandable()) ?
+"       \"\<Plug>(neosnippet_expand)" : "\<CR>"
 
 " ----------------------------------------------------------------------------
 " Markdown headings
@@ -649,15 +627,6 @@ nnoremap <leader>bs :cex []<BAR>bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><ri
 " #!! | Shebang
 " ----------------------------------------------------------------------------
 inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
-
-" ----------------------------------------------------------------------------
-" <leader>ij | Open in IntelliJ
-" ----------------------------------------------------------------------------
-if s:darwin
-  nnoremap <silent> <leader>ij
-  \ :call job_start(['/Applications/IntelliJ IDEA.app/Contents/MacOS/idea', expand('%:p')],
-  \ {'in_io': 'null', 'out_io': 'null', 'err_io': 'null'})<cr>
-endif
 
 " ----------------------------------------------------------------------------
 " Heytmux
@@ -787,7 +756,7 @@ nnoremap <silent> <F5> :call <SID>run_this_script(0)<cr>
 nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
 
 " ----------------------------------------------------------------------------
-" <F8> | Color scheme selector
+" Color scheme selector
 " ----------------------------------------------------------------------------
 function! s:rotate_colors()
   if !exists('s:colors')
@@ -799,7 +768,7 @@ function! s:rotate_colors()
   redraw
   echo name
 endfunction
-nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
+nnoremap <silent> <leader>cc :call <SID>rotate_colors()<cr>
 
 " ----------------------------------------------------------------------------
 " :Shuffle | Shuffle selected lines
@@ -945,7 +914,7 @@ function! s:todo() abort
     call setqflist(entries)
     copen
   endif
-endfunction
+  endfunction
 command! Todo call s:todo()
 
 " ----------------------------------------------------------------------------
@@ -970,18 +939,18 @@ endif
 " ----------------------------------------------------------------------------
 " AutoSave
 " ----------------------------------------------------------------------------
-function! s:autosave(enable)
-  augroup autosave
-    autocmd!
-    if a:enable
-      autocmd TextChanged,InsertLeave <buffer>
-            \  if empty(&buftype) && !empty(bufname(''))
-            \|   silent! update
-            \| endif
-    endif
-  augroup END
-endfunction
-
+" function! s:autosave(enable)
+"   augroup autosave
+"     autocmd!
+"     if a:enable
+"       autocmd TextChanged,InsertLeave <buffer>
+"             \  if empty(&buftype) && !empty(bufname(''))
+"             \|   silent! update
+"             \| endif
+"     endif
+"   augroup END
+" endfunction
+" 
 command! -bang AutoSave call s:autosave(<bang>1)
 
 " ----------------------------------------------------------------------------
@@ -1047,22 +1016,22 @@ endfunction
 " ----------------------------------------------------------------------------
 " Open FILENAME:LINE:COL
 " ----------------------------------------------------------------------------
-function! s:goto_line()
-  let tokens = split(expand('%'), ':')
-  if len(tokens) <= 1 || !filereadable(tokens[0])
-    return
-  endif
+" function! s:goto_line()
+"   let tokens = split(expand('%'), ':')
+"   if len(tokens) <= 1 || !filereadable(tokens[0])
+"     return
+"   endif
 
-  let file = tokens[0]
-  let rest = map(tokens[1:], 'str2nr(v:val)')
-  let line = get(rest, 0, 1)
-  let col  = get(rest, 1, 1)
-  bd!
-  silent execute 'e' file
-  execute printf('normal! %dG%d|', line, col)
-endfunction
+"   let file = tokens[0]
+"   let rest = map(tokens[1:], 'str2nr(v:val)')
+"   let line = get(rest, 0, 1)
+"   let col  = get(rest, 1, 1)
+"   bd!
+"   silent execute 'e' file
+"   execute printf('normal! %dG%d|', line, col)
+" endfunction
 
-autocmd vimrc BufNewFile * nested call s:goto_line()
+" autocmd vimrc BufNewFile * nested call s:goto_line()
 
 
 " ----------------------------------------------------------------------------
@@ -1373,7 +1342,7 @@ function! s:setup_extra_keys()
   nnoremap <buffer> <silent> H  :call <sid>plug_doc()<cr>
 endfunction
 
-autocmd vimrc FileType vim-plug call s:setup_extra_keys()
+" autocmd vimrc FileType vim-plug call s:setup_extra_keys()
 
 let g:plug_window = '-tabnew'
 let g:plug_pwindow = 'vertical rightbelow new'
@@ -1396,21 +1365,6 @@ nmap     <Leader>g :Gstatus<CR>gg<c-n>
 nnoremap <Leader>d :Gdiff<CR>
 
 " ----------------------------------------------------------------------------
-" vim-ruby
-" ----------------------------------------------------------------------------
-" ft-ruby-syntax
-let ruby_operators = 1
-let ruby_space_errors = 1
-let ruby_fold = 1
-let ruby_no_expensive = 1
-let ruby_spellcheck_strings = 1
-
-" ft-ruby-omni
-" let rubycomplete_buffer_loading = 1
-" let rubycomplete_classes_in_global = 1
-" let rubycomplete_load_gemfile = 1
-
-" ----------------------------------------------------------------------------
 " matchit.vim
 " ----------------------------------------------------------------------------
 runtime macros/matchit.vim
@@ -1431,7 +1385,7 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 silent! if has_key(g:plugs, 'vim-after-object')
   autocmd VimEnter * silent! call after_object#enable('=', ':', '#', ' ', '|')
 endif
-
+" 
 " ----------------------------------------------------------------------------
 " <Enter> | vim-easy-align
 " ----------------------------------------------------------------------------
@@ -1464,14 +1418,14 @@ let g:easy_align_delimiters = {
 \ }
 
 " Start interactive EasyAlign in visual mode
-xmap ga <Plug>(EasyAlign)
+" xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign with a Vim movement
-nmap ga <Plug>(EasyAlign)
-nmap gaa ga_
+" nmap ga <Plug>(EasyAlign)
+" nmap gaa ga_
 
-" xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
-" nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
+xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
+nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
 
 " inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
 
@@ -1564,7 +1518,7 @@ function! s:figwheel()
 endfunction
 
 augroup vimrc
-  autocmd FileType lisp,clojure,scheme RainbowParentheses
+  " autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
 
   " Clojure
@@ -1604,7 +1558,7 @@ function! VimAwesomeComplete() abort
   echohl WarningMsg
   echo 'Downloading plugin list from VimAwesome'
   echohl None
-ruby << EOF
+  ruby << EOF
   require 'json'
   require 'open-uri'
 
@@ -1641,10 +1595,11 @@ endfunction
 autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
 
 " ----------------------------------------------------------------------------
-" YCM
+" Deoplete
 " ----------------------------------------------------------------------------
-autocmd vimrc FileType c,cpp,go nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
-autocmd vimrc FileType c,cpp    nnoremap <buffer> K  :YcmCompleter GetType<CR>
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 " ----------------------------------------------------------------------------
 " gruvbox
@@ -1820,16 +1775,13 @@ nmap <silent> <leader>r :Require<cr>
 nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
 
 
-" EASYMOTION
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
 "nmap s <Plug>(easymotion-overwin-f)
 " or
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-map <leader>s <Plug>(easymotion-overwin-f2)
+map s <Plug>(easymotion-overwin-f2)
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
